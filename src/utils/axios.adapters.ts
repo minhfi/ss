@@ -1,0 +1,1 @@
+import './axios.adapter.auth'

@@ -1,0 +1,22 @@
+@keyframes typing {
+  from {
+    box-shadow: inset -3px 0px 0px #888;
+  }
+
+  to {
+    box-shadow: inset -3px 0px 0px transparent;
+  }
+}
+
+.mod-error-403,
+.mod-error-404 {
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    display: inline-block;
+    font-size: 50px;
+    padding-right: 12px;
+    animation: typing .5s alternate infinite;
+  }
+}
