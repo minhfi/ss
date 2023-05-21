@@ -6,8 +6,9 @@ import { getLayoutIsLoading, getModal, getThemeMode } from 'src/store/selectors'
 import { Loading } from 'src/components/loading'
 import { Modal } from 'src/components/modal'
 
-import { STAppLayout, STContent } from './styled'
+import { STContainer, STContent } from './styled'
 import { RouterView } from './router-view'
+import { Notify } from 'src/components/notify'
 
 const createThemeVariables = makeStyles<TTheme>(
   theme => ({
@@ -25,13 +26,14 @@ export const AppLayout: FC = () => {
   createThemeVariables({ paletteMode })
 
   return (
-    <STAppLayout isLoading={isLoading}>
+    <STContainer isLoading={isLoading}>
       <STContent>
         <RouterView/>
       </STContent>
 
       {appModal.open && <Modal/>}
       <Loading/>
-    </STAppLayout>
+      <Notify/>
+    </STContainer>
   )
 }

@@ -35,14 +35,20 @@ export const Typography = {
     lineHeight: '29px',
     letterSpacing: '-0.02em'
   },
+  h6: {
+    fontWeight: 700,
+    fontSize: 20,
+    lineHeight: '29px',
+    letterSpacing: '-0.02em'
+  },
   subtitle1: {
-    fontWeight: 400,
+    fontWeight: 700,
     fontSize: 18,
     lineHeight: '32px'
   },
   subtitle2: {
     fontWeight: 700,
-    fontSize: 18,
+    fontSize: 16,
     lineHeight: '32px'
   },
   body1: {
@@ -51,8 +57,8 @@ export const Typography = {
     lineHeight: '28px'
   },
   body2: {
-    fontWeight: 500,
-    fontSize: 16,
+    fontWeight: 400,
+    fontSize: 14,
     lineHeight: '28px'
   }
 }

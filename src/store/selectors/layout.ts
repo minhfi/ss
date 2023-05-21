@@ -21,3 +21,8 @@ export const getLayoutIsLoading: TSelectorResult<ILayoutState['isLoading']> = cr
   (state: TAppState) => state.layout,
   (layout: ILayoutState) => layout.isLoading
 )
+
+export const getLayoutNotify: TSelectorResult<ILayoutState['notify']> = createSelector(
+  (state: TAppState) => state.layout,
+  (layout: ILayoutState) => layout.notify
+)

@@ -3,7 +3,7 @@ import { styled } from '@mui/material'
 export const STContainer = styled('div', {
   shouldForwardProp: prop => prop !== 'isOpen',
   label: 'Loading'
-})<{isOpen: boolean}>(({ isOpen }) => `
+})<{isOpen: boolean}>(({ isOpen, theme }) => `
   position: absolute;
   z-index: 9999;
   left: 0;

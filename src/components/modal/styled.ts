@@ -28,7 +28,7 @@ export const STClose = styled('div', {
     cursor: pointer;
     box-shadow: 0px 8px 16px rgb(37 38 46 / 10%);
     border-radius: 32px;
-    background-color: ${theme.colors['--color-neutral-theme-100']};
+    background-color: ${theme.colors['--color-white']};
 
     display: ${isOpen ? 'flex' : 'none'};
     justify-content: center;

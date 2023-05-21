@@ -1,18 +1,18 @@
 import { styled } from '@mui/material'
 
-export const STAppLayout = styled('div', {
+export const STContainer = styled('div', {
   shouldForwardProp: prop => prop !== 'isLoading',
-  label: 'AppLayout'
+  label: 'Layout'
 })<{isLoading?: boolean}>(({ theme, isLoading }) => `
   display: flex;
   flex: 1 1 auto;
   flex-wrap: nowrap;
-  background-color: ${theme.colors['--color-neutral-theme-100']};
+  background-color: ${theme.colors['--color-white']};
   pointer-events: ${isLoading ? 'none' : 'auto'}
 `)
 
 export const STContent = styled('main', {
-  label: 'Content'
+  label: 'Main'
 })(() => `
   display: flex;
   flex: 1 1 auto;

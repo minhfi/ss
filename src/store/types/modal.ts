@@ -1,8 +1,8 @@
 import { ReactChild } from 'react'
 
 /* layout actions */
-export const MODAL = Symbol('MODAL')
-export const RESET_MODAL = Symbol('RESET_MODAL')
+export const MODAL = 'MODAL'
+export const RESET_MODAL = 'RESET_MODAL'
 
 /**
  * state

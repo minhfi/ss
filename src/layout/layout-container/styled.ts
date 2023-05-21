@@ -12,5 +12,5 @@ export const STChildren = styled('div', {
 })(({ theme }) => `
   height: 100%;
   overflow: auto;
-  background-color: ${theme.colors['--color-neutral-theme-100']}
+  background-color: ${theme.colors['--color-white']}
 `)

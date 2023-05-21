@@ -1,4 +1,4 @@
-export enum EMessage {
+export enum ENotify {
     SUCCESS = 'success',
     ERROR = 'error',
     WARNING = 'warning',
