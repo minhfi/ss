@@ -59,7 +59,7 @@ export const Typography = {
   body2: {
     fontWeight: 400,
     fontSize: 14,
-    lineHeight: '28px'
+    lineHeight: '20px'
   }
 }
 

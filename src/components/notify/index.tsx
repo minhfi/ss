@@ -55,7 +55,7 @@ export const Notify:FC = () => {
               variant="body1"
               sx={{
                 wordBreak: 'break-word',
-                lineHeight: 'unset',
+                lineHeight: '28px',
                 maxWidth: '240px'
               }}
             >

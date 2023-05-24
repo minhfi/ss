@@ -71,3 +71,7 @@ declare namespace NodeJS {
     const classes: { readonly [key: string]: string }
     export default classes
   }
+
+  declare module 'redux-persist/lib/storage'
+
+  declare module 'redux-persist/integration/react'
