@@ -10,7 +10,7 @@ const ButtonBase = styled(Button)<IButtonProps>(({ theme, ...props }) => css`
   
   padding: ${theme.spacing(0, 2)};
   text-transform: unset;
-  border-radius: 16px;
+  border-radius: 8px;
 
   &.MuiButton-fullWidth {
     width: 100% !important
@@ -18,7 +18,7 @@ const ButtonBase = styled(Button)<IButtonProps>(({ theme, ...props }) => css`
 `)
 
 export const ButtonPrimary = styled(ButtonBase)<IButtonProps>(({ theme, ...props }) => `
-  color: ${theme.colors['--color-neutral-theme-700']} !important;
+  color: ${props.colorText || theme.colors['--color-neutral-theme-700']} !important;
   background-color: ${props.background || `${theme.colors['--color-primary-400']} !important`} ;
 
   &:hover {

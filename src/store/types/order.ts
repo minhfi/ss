@@ -2,7 +2,7 @@ import { IProductModel } from 'src/interfaces'
 
 /* layout actions */
 export const ORDER_SET_PRODUCT = 'ORDER_SET_PRODUCT'
-export const ORDER_SET_PRODUCT_QUANTITY = 'ORDER_SET_PRODUCT_QUANTITY'
+export const ORDER_SET_USER = 'ORDER_SET_USER'
 
 /**
  * state
@@ -10,13 +10,18 @@ export const ORDER_SET_PRODUCT_QUANTITY = 'ORDER_SET_PRODUCT_QUANTITY'
 
 export interface IOrderState {
   product: IProductModel | null
-  quantity: number
+  user: {
+    name: string
+    phone: string
+  } | null
 }
 
 /**
  * actions
  */
 export interface IOrderAction {
-  type: typeof ORDER_SET_PRODUCT | typeof ORDER_SET_PRODUCT_QUANTITY
-  value?: IProductModel | number | null
+  type:
+    | typeof ORDER_SET_PRODUCT
+    | typeof ORDER_SET_USER
+  value?: IProductModel | number | null | { name: string; phone: string }
 }

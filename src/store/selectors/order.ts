@@ -7,7 +7,7 @@ export const getOrderProduct: TSelectorResult<IOrderState['product']> = createSe
   (order: IOrderState) => order.product
 )
 
-export const getOrderProductQuantity: TSelectorResult<IOrderState['quantity']> = createSelector(
+export const getOrderUser: TSelectorResult<IOrderState['user']> = createSelector(
   (state: TAppState) => state.order,
-  (order: IOrderState) => order.quantity
+  (order: IOrderState) => order.user
 )

@@ -10,10 +10,10 @@ export const TextField = styled(MuiTextField, { label: 'TextFieldCustom' })(({ t
 
 
   div.MuiInputBase-root {
-    border: none;
-    border-radius: 16px;
+    border: 1px solid ${theme.colors['--color-neutral-theme-200']};
+    border-radius: 8px;
     color: ${theme.colors['--color-neutral-theme-700']};
-    background-color: ${theme.colors['--color-neutral-theme-100']};
+    background-color: ${theme.colors['--color-white']};
 
     input {
       padding: ${theme.spacing(1)};
@@ -33,7 +33,7 @@ export const TextField = styled(MuiTextField, { label: 'TextFieldCustom' })(({ t
     fieldset {
       border-color: transparent;
       border-width: 1px !important;
-      border-radius: 16px !important;
+      border-radius: 8px !important;
     }
 
     &:hover,

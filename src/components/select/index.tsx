@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from 'react'
 import { Box, ClickAwayListener, Typography } from '@mui/material'
-import { IObject } from 'src/interfaces'
+import { capitalize } from 'src/utils/format-data.util'
 import { IconArrowDown } from 'src/assets/icons'
+import { IObject } from 'src/interfaces'
 
 import { STOptionIem, STOption, STLabel, STError } from './styled'
 import { Message } from '../message'
@@ -38,8 +39,8 @@ export const Select: FC<ISelectProps> = ({ placeholder, options, onChange, width
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
       <Box position="relative">
         <STLabel width={width} onClick={handleIsOpenDropdown} error={error} disabled={disabled}>
-          <Typography variant="body1">
-            {option?.label || placeholder}
+          <Typography variant="body2">
+            {capitalize(option?.label) || placeholder}
           </Typography>
           <IconArrowDown/>
         </STLabel>
@@ -54,8 +55,8 @@ export const Select: FC<ISelectProps> = ({ placeholder, options, onChange, width
           <STOption>
             {options?.map(item => (
               <STOptionIem key={item.value} isActive={(item.value === option?.value)} onClick={() => handleSelect(item)}>
-                <Typography variant={item.value === option?.value ? 'subtitle2' : 'body1'}>
-                  {item.label}
+                <Typography variant={item.value === option?.value ? 'subtitle2' : 'body1'} sx={{ textTransform: 'capitalize' }}>
+                  {capitalize(item.label)}
                 </Typography>
               </STOptionIem>
             ))}

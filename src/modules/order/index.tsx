@@ -3,12 +3,11 @@ import { AxiosError } from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Divider, Typography, useTheme } from '@mui/material'
-import { getOrderProduct, getOrderProductQuantity } from 'src/store/selectors/order'
+import { getOrderProduct, getOrderUser } from 'src/store/selectors/order'
 import { IFormDataOrder, IObject, IOptionsAddress, IOrder } from 'src/interfaces'
 import { setLayoutLoading, setLayoutNotify } from 'src/store/actions'
 import { formatCurrency } from 'src/utils/format-currency.utils'
 import { useValidation } from 'src/hooks/useValidation'
-import Product from 'src/assets/images/product.png'
 import { Select } from 'src/components/select'
 import { Button } from 'src/components/button'
 import { ENotify } from 'src/constants/enum'
@@ -23,11 +22,10 @@ import { orderSchema } from './schema'
 const Order:FC = () => {
   const theme = useTheme()
   const dispatch = useDispatch()
-  const productQuantity = useSelector(getOrderProductQuantity)
+  const orderUser = useSelector(getOrderUser)
   const product = useSelector(getOrderProduct)
   const { errors, validate } = useValidation<IFormDataOrder>()
 
-  const [quantity, setQuantity] = useState(productQuantity)
   const [option, setOption] = useState<IOptionsAddress>({
     provinces: [],
     districts: [],
@@ -35,8 +33,8 @@ const Order:FC = () => {
   })
 
   const [formData, setFormData] = useState<IFormDataOrder>({
-    name: '',
-    phone: '',
+    name: orderUser?.name || '',
+    phone: orderUser?.phone || '',
     email: '',
     province: null,
     district: null,
@@ -46,7 +44,6 @@ const Order:FC = () => {
   })
 
   const handleChangeInput = useCallback<ChangeEventHandler<HTMLInputElement>>((e) => {
-    e.persist()
     const { name, value } = e.target
 
     setFormData(
@@ -56,15 +53,6 @@ const Order:FC = () => {
       })
     )
   }, [formData])
-
-  const handleQuantity = (type: string) => {
-    if (type === 'minus') {
-      if (quantity === 1) return
-      return setQuantity(quantity => quantity - 1)
-    }
-
-    return setQuantity(quantity => quantity + 1)
-  }
 
   const findAddress = (options: IObject[], value: number) => {
     const obj = options?.find((option: IObject) => option.value === value)
@@ -97,7 +85,7 @@ const Order:FC = () => {
           phone: formData.phone,
           email: formData.email || undefined
         },
-        order_value: quantity * (product?.price || 0),
+        order_value: product?.price || 0,
         transaction_fee: 0,
         paid_date: '2023-05-05 13:10:47',
         transaction_id: uuidv4(),
@@ -105,17 +93,24 @@ const Order:FC = () => {
           {
             name: product?.name || '',
             price: product?.price || 0,
-            product_id: (product?.id || '').toString(),
-            quantity: quantity
+            product_id: (product?.id || '').toString() || '17',
+            quantity: 1
           }
         ]
       }
 
       const { data } = await OrderApi.order(payload)
 
-      if (data) {
-        window.location.assign(data.data?.payment_url || '')
-      }
+      console.log({ data })
+      // if (data) {
+      //   window.location.assign(data.data?.payment_url || '')
+      // }
+
+      dispatch(setLayoutNotify({
+        open: true,
+        type: ENotify.SUCCESS,
+        content: 'Đặt hàng thành công'
+      }))
     } catch (error: any) {
       const code = error?.response?.data?.code
       const message = error?.response?.data?.message
@@ -220,7 +215,7 @@ const Order:FC = () => {
   return (
     <STContainer>
       <Box maxWidth={1440} width="100%" display="flex" gap={5}>
-        <Box width="60%">
+        <Box width="65%">
           <Typography variant="subtitle1" color="#00577C">THÔNG TIN KHÁCH HÀNG</Typography>
           <Box width="100%" display="flex" gap={2} mt={2}>
             <Box width="33%">
@@ -343,52 +338,18 @@ const Order:FC = () => {
           </Box>
         </Box>
 
-        <Box width="40%">
+        <Box width="35%">
           <Typography variant="subtitle1" color="#00577C">THÔNG TIN SẢN PHẨM</Typography>
           <Box mt={1} display="flex" alignItems="center" justifyContent="space-between">
-            <Box display="flex" alignItems="center">
-              <img src={Product} alt="product"/>
-
-              <Box display="flex" flexDirection="column">
-                <Typography variant="subtitle2">{product?.name}</Typography>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      border: '1px solid #ccc',
-                      padding: '8px',
-                      lineHeight: 0,
-                      cursor: 'pointer'
-                    }}
-                    onClick={() => handleQuantity('minus')}
-                  >
-                    -
-                  </Typography>
-                  <Typography variant="subtitle2">{quantity}</Typography>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      border: '1px solid #ccc',
-                      padding: '8px',
-                      lineHeight: 0,
-                      cursor: 'pointer'
-                    }}
-                    onClick={() => handleQuantity('plus')}
-                  >
-                    +
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-
-            <Typography variant="body2" color={theme.colors['--color-black']}>{formatCurrency((product?.price || 0) * quantity)} đ</Typography>
+            <img src={product?.image || ''} alt="product" width={200}/>
+            <Typography variant="subtitle2">{product?.name}</Typography>
           </Box>
 
           <Divider/>
 
           <Box mt={2} mb={1} display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="subtitle2" color={theme.colors['--color-black']}>Tổng tiền:</Typography>
-            <Typography variant="subtitle2" color={theme.colors['--color-negative-500']}>{formatCurrency((product?.price || 0) * quantity)} đ</Typography>
+            <Typography variant="subtitle2" color={theme.colors['--color-negative-500']}>{formatCurrency((product?.price || 0))} đ</Typography>
           </Box>
 
           <Button fullWidth height={40} background="#00577C" onClick={handleOrder}>

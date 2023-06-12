@@ -3,10 +3,12 @@ import { styled } from '@mui/material'
 export const STContainer = styled('div', {
   label: 'Home'
 })(({ theme }) => `
-    padding: 0 40px;
+    padding: 0 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: ${theme.colors['--color-white']};
+    max-width: 1200px;
 `)
 
 export const STHeader = styled('div', {
@@ -34,7 +36,6 @@ export const STContent = styled('div', {
 })(({ theme }) => `
       padding: 32px 0;
       display: flex;
-      align-items: flex-end;
       gap: 32px;
 `)
 
@@ -57,7 +58,14 @@ export const STPromotion = styled('div', {
     border: 2px solid rgb(11,153,219);
     display: flex;
     align-items: center;
-    justify-content: center;    
+    justify-content: center;
+    gap: ${theme.spacing(2)};
+
+    span {
+      width: 100px;
+      letter-spacing: 1px;
+      color: ${theme.colors['--color-negative-500']}
+    }
 `)
 
 export const STDescription = styled('div', {
@@ -72,22 +80,37 @@ export const STProduct = styled('div', {
   label: 'Product'
 })(({ theme }) => `
     width: 100%;
-    height: 300px;
-    border: 1px solid ${theme.colors['--color-neutral-theme-100']};
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border-radius: 8px 8px 0 0;
+    gap: 24px;
+`)
 
-    >div {
-        width: 100%;
-        background: #1da1f2;
-        padding: 16px;
-        border-radius: 8px 8px 0 0;
+export const STProductItem = styled('div', {
+  label: 'ProductItem'
+})(({ theme }) => `
+    width: 100%;
+`)
+
+export const STSaleBox = styled('div', {
+  label: 'SaleBox'
+})(({ theme }) => `
+    position: relative;
+
+    svg {
+      width: 165px;
+      height: 165px;
     }
 
-    img {
-        margin-top: 28px;
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 131px;
+      position: absolute;
+      top: 50%;  /* position the top  edge of the element at the middle of the parent */
+      left: 50%; /* position the left edge of the element at the middle of the parent */
+
+      transform: translate(-50%, -50%); 
     }
 `)
 
@@ -95,6 +118,28 @@ export const STRight = styled('div', {
   label: 'Right'
 })(({ theme }) => `
     width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+`)
+
+export const STPaymentInfo = styled('div', {
+  label: 'PaymentInfo'
+})(({ theme }) => `
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    background: #1da1f2;
+    padding: 24px;
+
+`)
+
+export const STBillInfo = styled('div', {
+  label: 'BillInfo'
+})(({ theme }) => `
+    width: 100%;
     display: flex;
     flex-direction: column;
 `)

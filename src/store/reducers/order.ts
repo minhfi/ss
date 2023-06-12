@@ -1,8 +1,8 @@
-import { IOrderState, IOrderAction, ORDER_SET_PRODUCT, ORDER_SET_PRODUCT_QUANTITY } from './../types'
+import { IOrderState, IOrderAction, ORDER_SET_PRODUCT, ORDER_SET_USER } from './../types'
 
 const initState: IOrderState = {
   product: null,
-  quantity: 1
+  user: null
 }
 
 export const reducer = (state = initState, action: IOrderAction) => {
@@ -12,10 +12,10 @@ export const reducer = (state = initState, action: IOrderAction) => {
         ...state,
         product: action.value
       }
-    case ORDER_SET_PRODUCT_QUANTITY:
+    case ORDER_SET_USER:
       return {
         ...state,
-        quantity: action.value
+        user: action.value
       }
     default:
       return state
