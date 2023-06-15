@@ -39,5 +39,5 @@ export const Input: FC<InputProps> = ({ label, error, mb, required, ...props }) 
 
 Input.defaultProps = {
   type: 'text',
-  mb: 4
+  mb: 3
 }

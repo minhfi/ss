@@ -16,7 +16,7 @@ import { Input } from 'src/components/input'
 import { OrderApi } from 'src/apis/order'
 import { AddressApi } from 'src/apis'
 
-import { STContainer } from './styled'
+import { STAddress, STContainer, STCustomerInfo, STLeft, STOrder, STRight } from './styled'
 import { orderSchema } from './schema'
 
 const Order:FC = () => {
@@ -101,16 +101,15 @@ const Order:FC = () => {
 
       const { data } = await OrderApi.order(payload)
 
-      console.log({ data })
-      // if (data) {
-      //   window.location.assign(data.data?.payment_url || '')
-      // }
-
-      dispatch(setLayoutNotify({
-        open: true,
-        type: ENotify.SUCCESS,
-        content: 'Đặt hàng thành công'
-      }))
+      if (data.data?.payment_url) {
+        window.location.assign(data.data?.payment_url || '')
+      } else {
+        dispatch(setLayoutNotify({
+          open: true,
+          type: ENotify.SUCCESS,
+          content: 'Đặt hàng thành công'
+        }))
+      }
     } catch (error: any) {
       const code = error?.response?.data?.code
       const message = error?.response?.data?.message
@@ -214,10 +213,10 @@ const Order:FC = () => {
 
   return (
     <STContainer>
-      <Box maxWidth={1440} width="100%" display="flex" gap={5}>
-        <Box width="65%">
+      <STOrder>
+        <STLeft>
           <Typography variant="subtitle1" color="#00577C">THÔNG TIN KHÁCH HÀNG</Typography>
-          <Box width="100%" display="flex" gap={2} mt={2}>
+          <STCustomerInfo>
             <Box width="33%">
               <Input
                 required
@@ -254,11 +253,11 @@ const Order:FC = () => {
                 error={errors.email}
               />
             </Box>
-          </Box>
+          </STCustomerInfo>
 
           <Typography variant="subtitle1" color="#00577C">THÔNG TIN VẬN CHUYỂN</Typography>
-          <Box display="flex" gap={2} mt={2}>
-            <Box width="33%" display="flex" flexDirection="column">
+          <STAddress>
+            <Box mb={3} width="33%" display="flex" flexDirection="column">
               <Label>Tỉnh/Thành phố <Typography component="span" variant="body2" color={theme.colors['--color-negative-500']}>*</Typography></Label>
               <Select
                 value={formData.province}
@@ -274,7 +273,7 @@ const Order:FC = () => {
                 }}
               />
             </Box>
-            <Box width="33%" display="flex" flexDirection="column">
+            <Box mb={3} width="33%" display="flex" flexDirection="column">
               <Label>Quận/Huyện <Typography component="span" variant="body2" color={theme.colors['--color-negative-500']}>*</Typography></Label>
               <Select
                 value={formData.district}
@@ -290,7 +289,7 @@ const Order:FC = () => {
                 }}
               />
             </Box>
-            <Box width="33%" display="flex" flexDirection="column">
+            <Box mb={3} width="33%" display="flex" flexDirection="column">
               <Label>Phường/Xã <Typography component="span" variant="body2" color={theme.colors['--color-negative-500']}>*</Typography></Label>
               <Select
                 value={formData.ward}
@@ -300,11 +299,11 @@ const Order:FC = () => {
                 onChange={(option: IObject) => setFormData(prev => ({ ...prev, ward: option }))}
               />
             </Box>
-          </Box>
+          </STAddress>
 
-          <Box mt={2}>
+          <Box>
             <Input
-              mb={2}
+              mb={3}
               required
               label="Địa chỉ nhận hàng đầy đủ"
               id="address"
@@ -321,7 +320,7 @@ const Order:FC = () => {
             <Typography variant="body1" color="#F85656">Trả sau</Typography>
           </Box>
 
-          <Box mt={2} mb={4}>
+          <Box mt={2} mb={3}>
             <Typography variant="body2">Quý khách vui lòng thanh toán phí vận chuyển khi nhận hàng</Typography>
             <Typography variant="body2" color="#DD890A">(Lưu ý: phí vận chuyển thực tế có thể khác so với phí dự tính)</Typography>
           </Box>
@@ -336,9 +335,9 @@ const Order:FC = () => {
               onChange={handleChangeInput}
             />
           </Box>
-        </Box>
+        </STLeft>
 
-        <Box width="35%">
+        <STRight>
           <Typography variant="subtitle1" color="#00577C">THÔNG TIN SẢN PHẨM</Typography>
           <Box mt={1} display="flex" alignItems="center" justifyContent="space-between">
             <img src={product?.image || ''} alt="product" width={200}/>
@@ -355,8 +354,8 @@ const Order:FC = () => {
           <Button fullWidth height={40} background="#00577C" onClick={handleOrder}>
             <Typography variant="body2" color={theme.colors['--color-white']}>Xác nhận thông tin đặt hàng</Typography>
           </Button>
-        </Box>
-      </Box>
+        </STRight>
+      </STOrder>
     </STContainer>
   )
 }

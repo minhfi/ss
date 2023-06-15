@@ -1,4 +1,4 @@
-import { styled } from '@mui/material'
+import { Box, styled } from '@mui/material'
 
 export const STContainer = styled('div', {
   label: 'Home'
@@ -9,6 +9,12 @@ export const STContainer = styled('div', {
     align-items: center;
     background: ${theme.colors['--color-white']};
     max-width: 1200px;
+    width: 100%;
+
+    @media (max-width: 1023px) {
+      max-width: unset;
+      width: 100%;
+    }
 `)
 
 export const STHeader = styled('div', {
@@ -29,24 +35,38 @@ export const STHeader = styled('div', {
         object-fit: cover;
         height: 100px;
     }
+
+    @media (max-width: 1023px) {
+      img:nth-of-type(2) {
+        display: none;
+      }
+    }
 `)
 
 export const STContent = styled('div', {
   label: 'Content'
 })(({ theme }) => `
-      padding: 32px 0;
+      padding: 40px 0;
       display: flex;
       gap: 32px;
+
+      @media (max-width: 1023px) {
+        flex-direction: column;
+      }
 `)
 
 export const STLeft = styled('div', {
   label: 'Left'
 })(({ theme }) => `
-       width: 60%;
+       width: 64%;
        display: flex;
        flex-direction: column;
        align-items: center;
        gap: 16px;
+
+      @media (max-width: 1023px) {
+        width: 100%;
+      }
   `)
 
 export const STPromotion = styled('div', {
@@ -60,11 +80,22 @@ export const STPromotion = styled('div', {
     align-items: center;
     justify-content: center;
     gap: ${theme.spacing(2)};
+    padding: ${theme.spacing(1)};
 
     span {
       width: 100px;
       letter-spacing: 1px;
       color: ${theme.colors['--color-negative-500']}
+    }
+
+    @media (max-width: 424px) {
+      p {
+        font-size: 12px;
+      } 
+
+      span {
+        font-size: 24px;
+      }
     }
 `)
 
@@ -74,6 +105,10 @@ export const STDescription = styled('div', {
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      p {
+        text-align: center;
+      }
 `)
 
 export const STProduct = styled('div', {
@@ -89,6 +124,69 @@ export const STProductItem = styled('div', {
   label: 'ProductItem'
 })(({ theme }) => `
     width: 100%;
+    cursor: pointer;
+`)
+
+export const STProductItemContent = styled(Box, {
+  label: 'ProductItemContent'
+})(({ theme }) => `
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spacing(2)};
+    padding: ${theme.spacing(2, 3)};
+    border: 1px solid #ccc;
+    border-radius: 0 0 8px 8px;
+
+    @media (max-width: 767px) {
+      > h6 {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 500px) {
+      > div > img {
+        width: 270px;
+      }
+    }
+
+    @media (max-width: 419px) {
+      > div > img {
+        width: 200px;
+      }
+    }
+`)
+
+export const STSelectProduct = styled('div', {
+  label: 'SelectProduct'
+})(({ theme }) => `
+    display: flex;
+    flex-direction: column;
+    gap: ${theme.spacing(2)};
+
+    @media (max-width: 767px) {
+        position: absolute;
+        right: -20px;
+
+        button {
+          display: none;
+        }
+    }
+`)
+
+export const STProductItemAction = styled('div', {
+  label: 'ProductItemAction'
+})(({ theme }) => `
+    display: none;
+
+    @media (max-width: 767px) {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        button {
+          width: 200px;
+        }
+    }
 `)
 
 export const STSaleBox = styled('div', {
@@ -112,15 +210,39 @@ export const STSaleBox = styled('div', {
 
       transform: translate(-50%, -50%); 
     }
+
+    @media (max-width: 767px) {
+      svg {
+        width: 120px;
+      }
+
+      p, h6 {
+        font-size: 10px;
+      }
+  }
+`)
+
+export const STCircle = styled('div', {
+  label: 'Circle'
+})(({ theme }) => `
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  border: 4px solid rgb(234, 92, 33);
+  border-radius: 153px;
 `)
 
 export const STRight = styled('div', {
   label: 'Right'
 })(({ theme }) => `
-    width: 40%;
+    width: 36%;
     display: flex;
     flex-direction: column;
     gap: 32px;
+
+    @media (max-width: 1023px) {
+      width: 100%;
+    }
 `)
 
 export const STPaymentInfo = styled('div', {
@@ -142,4 +264,23 @@ export const STBillInfo = styled('div', {
     width: 100%;
     display: flex;
     flex-direction: column;
+`)
+
+export const STFooter = styled('div', {
+  label: 'Footer'
+})(({ theme }) => `
+    width: 100%;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    > div:nth-of-type(2) {
+      @media (max-width: 767px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
 `)
