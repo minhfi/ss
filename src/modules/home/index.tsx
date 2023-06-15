@@ -7,7 +7,7 @@ import {
   useState
 } from 'react'
 import { AxiosError } from 'axios'
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { Box, Divider, Typography, useTheme } from '@mui/material'
 import {
@@ -27,6 +27,7 @@ import { Button } from 'src/components/button'
 import Product1 from 'src/assets/images/product1.png'
 import Product3 from 'src/assets/images/product3.png'
 import Product5 from 'src/assets/images/product5.png'
+import { useValidation } from 'src/hooks/useValidation'
 
 import {
   STBillInfo,
@@ -41,7 +42,6 @@ import {
   STPromotion,
   STRight
 } from './styled'
-import { useValidation } from 'src/hooks/useValidation'
 import { homeSchema } from './schema'
 import ProductItem from './ProductItem'
 
@@ -54,6 +54,8 @@ const Home: FC = () => {
   const history = useHistory()
   const theme = useTheme()
   const dispatch = useDispatch()
+  const location = useLocation()
+
   const { minutes, seconds } = useCountdown(30, 0)
   const { errors, validate } = useValidation<IFormData>()
   const [products, setProducts] = useState<IProductModel[]>()
@@ -63,7 +65,12 @@ const Home: FC = () => {
     phone: ''
   })
 
-  const product: IProductModel | null = products?.find(({ checked }) => checked) || null
+  const searchParams = location.search && JSON.parse(
+    decodeURIComponent(location.search?.split('=')?.[1] || '')
+  )
+
+  const product: IProductModel | null =
+    products?.find(({ checked }) => checked) || null
 
   const handleChangeInput = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (e) => {
@@ -164,6 +171,16 @@ const Home: FC = () => {
   useEffect(() => {
     loadProduct()
   }, [])
+
+  useEffect(() => {
+    if (searchParams.name || searchParams.phone) {
+      setFormData((prev) => ({
+        ...prev,
+        name: searchParams.name || '',
+        phone: searchParams.phone || ''
+      }))
+    }
+  }, [searchParams.name, searchParams.phone])
 
   const PRODUCTS = useMemo(() => {
     return products?.map((item) => (

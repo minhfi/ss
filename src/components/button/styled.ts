@@ -17,7 +17,9 @@ const ButtonBase = styled(Button)<IButtonProps>(({ theme, ...props }) => css`
   }
 `)
 
-export const ButtonPrimary = styled(ButtonBase)<IButtonProps>(({ theme, ...props }) => `
+export const ButtonPrimary = styled(ButtonBase, {
+  shouldForwardProp: prop => prop !== 'colorText'
+})<IButtonProps>(({ theme, ...props }) => `
   color: ${props.colorText || theme.colors['--color-neutral-theme-700']} !important;
   background-color: ${props.background || `${theme.colors['--color-primary-400']} !important`} ;
 

@@ -31,7 +31,7 @@ const App: FC = () => {
 
   return (
     <Provider store={configureStore.store}>
-      <PGate loading={() => <div>123123</div>} persistor={configureStore.persistor || ''}>
+      <PGate loading={null} persistor={configureStore.persistor}>
         <Router history={history}>
           <AppTheme/>
         </Router>
