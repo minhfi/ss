@@ -18,6 +18,19 @@ export interface IFormDataOrder {
   note?: string
 }
 
+export interface ILangdingPage {
+  affiliate_id?: string
+  click_id?: string
+  customer_name?: string
+  customer_phone?: string
+  network_url?: string
+  offer_id?: number
+  product_id?: number
+  product_name?: string
+  sub_id?: string
+  tracker_id?: number
+}
+
 export interface IOrder {
   customer: {
     address: {
@@ -35,6 +48,7 @@ export interface IOrder {
   transaction_fee: number
   paid_date: string
   transaction_id: string
+  landing_page: ILangdingPage
   products: {
     name: string
     price: number

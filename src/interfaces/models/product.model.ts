@@ -6,7 +6,7 @@ export interface IProductModel extends IModel {
   price?: number
   isFreeShip?: boolean
   priceSale?: number
-  image?: string
+  link?: string
   checked?: boolean
   prices?: {
     price: number

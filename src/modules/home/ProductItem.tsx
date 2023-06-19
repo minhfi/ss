@@ -51,7 +51,7 @@ const ProductItem:FC<IProductItemProps> = ({ data, handleCheckProduct }) => {
       >
         <Box display="flex" alignItems="center" justifyContent="space-between" position="relative">
           {data.checked ? <Box width={40}><IChecked width={40}/></Box> : <STCircle/>}
-          <img src={data.image} alt="product" width={350}/>
+          <img src={data.link} alt="product" width={350}/>
           <STSelectProduct>
             <STSaleBox>
               <ISale/>

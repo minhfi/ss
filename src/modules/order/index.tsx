@@ -1,6 +1,7 @@
 import { ChangeEventHandler, FC, useCallback, useEffect, useState } from 'react'
 import { AxiosError } from 'axios'
 import { v4 as uuidv4 } from 'uuid'
+import { useLocation } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box, Divider, Typography, useTheme } from '@mui/material'
 import { getOrderProduct, getOrderUser } from 'src/store/selectors/order'
@@ -19,8 +20,22 @@ import { AddressApi } from 'src/apis'
 import { STAddress, STContainer, STCustomerInfo, STLeft, STOrder, STRight } from './styled'
 import { orderSchema } from './schema'
 
+export interface IParamsURL {
+  adf_source?: string
+  clickId?: string
+  name?: string
+  phone?: string
+  link?: string
+  offerId?: number
+  prodId?: number
+  prodName?: string
+  affiliate?: string
+  trackerId?: number
+}
+
 const Order:FC = () => {
   const theme = useTheme()
+  const location = useLocation()
   const dispatch = useDispatch()
   const orderUser = useSelector(getOrderUser)
   const product = useSelector(getOrderProduct)
@@ -72,6 +87,8 @@ const Order:FC = () => {
 
       dispatch(setLayoutLoading(true))
 
+      const landingPage: IParamsURL = location.state || {}
+
       const payload: IOrder = {
         customer: {
           address: {
@@ -89,6 +106,18 @@ const Order:FC = () => {
         transaction_fee: 0,
         paid_date: '2023-05-05 13:10:47',
         transaction_id: uuidv4(),
+        landing_page: {
+          affiliate_id: landingPage?.adf_source || '',
+          click_id: landingPage?.clickId || '',
+          customer_name: landingPage?.name || '',
+          customer_phone: landingPage?.phone || '',
+          network_url: landingPage?.link || '',
+          offer_id: Number(landingPage?.offerId),
+          product_id: Number(landingPage?.prodId),
+          product_name: landingPage?.prodName || '',
+          sub_id: landingPage?.affiliate,
+          tracker_id: Number(landingPage?.trackerId)
+        },
         products: [
           {
             name: product?.name || '',
@@ -340,7 +369,7 @@ const Order:FC = () => {
         <STRight>
           <Typography variant="subtitle1" color="#00577C">THÔNG TIN SẢN PHẨM</Typography>
           <Box mt={1} display="flex" alignItems="center" justifyContent="space-between">
-            <img src={product?.image || ''} alt="product" width={200}/>
+            <img src={product?.link || ''} alt="product" width={200}/>
             <Typography variant="subtitle2">{product?.name}</Typography>
           </Box>
 

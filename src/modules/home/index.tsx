@@ -21,12 +21,9 @@ import { useCountdown } from 'src/hooks/useCountdown'
 import { Input } from 'src/components/input'
 import { ENotify } from 'src/constants/enum'
 import Logo from 'src/assets/images/logo.png'
-// import { ProductApi } from 'src/apis/product'
+import { ProductApi } from 'src/apis/product'
 import { IProductModel } from 'src/interfaces'
 import { Button } from 'src/components/button'
-import Product1 from 'src/assets/images/product1.png'
-import Product3 from 'src/assets/images/product3.png'
-import Product5 from 'src/assets/images/product5.png'
 import { useValidation } from 'src/hooks/useValidation'
 
 import {
@@ -44,6 +41,7 @@ import {
 } from './styled'
 import { homeSchema } from './schema'
 import ProductItem from './ProductItem'
+import { IParamsURL } from '../order'
 
 interface IFormData {
   name: string
@@ -100,41 +98,37 @@ const Home: FC = () => {
 
   const loadProduct = async () => {
     try {
-      // const { data } = await ProductApi.pagination()
+      let products:IProductModel[] = []
 
-      // if (data.data.length) {
-      // const product = {
-      //   id: data.data[0].id,
-      //   name: data.data[0].name,
-      //   price: data.data[0]?.prices?.[0]?.price || 0
-      // }
+      const landingPage: IParamsURL = searchParams || {}
 
-      const products = [
-        {
-          name: 'MUA 5 HỘP',
-          price: 1794500,
-          isFreeShip: true,
-          priceSale: 2400000,
-          image: Product5
-        },
-        {
-          name: 'MUA 3 HỘP',
-          price: 1099200,
-          isFreeShip: true,
-          priceSale: 1000000,
-          image: Product3
-        },
-        {
-          name: 'MUA 1 HỘP',
-          price: 590000,
-          isFreeShip: false,
-          priceSale: 590000,
-          image: Product1
-        }
-      ]
+      if (landingPage.prodId) {
+        const { data } = await ProductApi.detail(landingPage.prodId)
 
-      setProducts(products)
-      // }
+        products = data.data?.map((item, index) => ({
+          name: item.name,
+          price: item.price,
+          isFreeShip: !(index > 1),
+          priceSale: !index ? 2400000 : index === 1 ? 1000000 : 590000,
+          link: item.link
+        }))
+      }
+
+      if (!products.length) {
+        const { data } = await ProductApi.pagination()
+
+        products = data.data?.map((item, index) => ({
+          name: item.name,
+          price: item.price,
+          isFreeShip: !(index > 1),
+          priceSale: !index ? 2400000 : index === 1 ? 1000000 : 590000,
+          link: item.link
+        }))
+      }
+
+      if (products.length) {
+        setProducts(products)
+      }
     } catch (error) {
       console.log(error as AxiosError)
     }
@@ -155,9 +149,11 @@ const Home: FC = () => {
       dispatch(setOrderUser(formData))
       dispatch(setOrderProduct(product))
 
-      history.push('/order')
+      history.push({
+        pathname: '/order',
+        state: searchParams
+      })
     } catch (error: any) {
-      console.log({ error })
       dispatch(
         setLayoutNotify({
           open: true,
